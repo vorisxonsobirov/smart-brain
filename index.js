@@ -21,6 +21,9 @@ async function connectToDb() {
 }
 
 connectToDb();
+app.get('/',(req,res)=>{
+    res.json("Salom Node.js")
+})
 
 app.use("/group", roomRoutes);
 
