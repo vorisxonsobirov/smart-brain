@@ -1,9 +1,8 @@
-// index.js
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoute');
+const roomRoutes = require("./routes/roomRoutes");
 
 const app = express();
 
@@ -13,17 +12,17 @@ app.use(cors());
 // ----------- MongoDB ------------
 async function connectToDb() {
     try {
-        await mongoose.connect(process.env.MONGO_URL, {
-        });
+        await mongoose.connect(process.env.MONGO_URL);
         console.log("MongoDB connected successfully");
     } catch (error) {
         console.error("Failed to connect to MongoDB", error);
+        process.exit(1); // Выход из процесса Node.js при ошибке подключения
     }
 }
+
 connectToDb();
 
-//  --- Routes
-app.use("/users", userRoutes);
+app.use("/group", roomRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
